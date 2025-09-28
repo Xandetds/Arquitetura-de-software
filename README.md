@@ -78,7 +78,7 @@ O objetivo é aplicar **conceitos de arquitetura**, **escalabilidade** e **resil
 
 ---
 
-## 📊 Resultados Esperados
+## 📊 Resultados 
 - **Antes do cache:**  
   - Latência maior (cada requisição busca diretamente os dados).  
   - Maior uso de CPU/I/O.  
@@ -91,8 +91,6 @@ O objetivo é aplicar **conceitos de arquitetura**, **escalabilidade** e **resil
 
 ---
 
-## 👨‍💻 Autor
-- **Aluno:** Alexandre Tibes da Silva  
 - **Disciplina:** Arquitetura de Software  
 - **Instituição:** UniSatc  
 
