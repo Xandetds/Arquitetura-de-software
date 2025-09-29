@@ -1,98 +1,102 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+<div align="center">
+  <h1>🛒 E-commerce API — Software Architecture</h1>
+  <p>Practical project for the <b>Software Architecture</b> course — UniSatc</p>
+</div>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📚 About the Project
+This repository contains the development and evolution of a **REST API built with NestJS** for an e-commerce system, delivered in two iterations.  
+The main goal was to apply **architecture concepts**, **scalability**, and **resilience**, with hands-on **performance testing**.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Tech Stack
+<div align="center">
 
-## Project setup
+<a href="https://skillicons.dev">
+  <img src="https://skillicons.dev/icons?i=nodejs,nest,ts,redis,postgres,github" alt="Skills" />
+</a>
 
-```bash
-$ npm install
-```
+<br/><br/>
 
-## Compile and run the project
+<img src="https://img.shields.io/badge/Artillery-000000?style=for-the-badge&logo=artillery&logoColor=white" alt="Artillery">
+<img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman">
 
-```bash
-# development
-$ npm run start
+</div>
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
-```
+## 📌 API Structure
+### Main Endpoints
+- **GET `/products`** → List all products (with pagination support).  
+- **GET `/products/:id`** → Get details of a specific product.  
+- **POST `/cart/add`** → Add an item to the cart (with artificial delay to simulate heavy processing).  
+- **GET `/cart/:id`** → Retrieve a cart and its items.  
+- **PUT `/cart/:id/items/:productId`** → Update quantity of a cart item.  
+- **DELETE `/cart/:id/items/:productId`** → Remove an item from the cart.  
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+# 📦 Delivery 1 — Initial Implementation
+### ✔️ Goals
+- Implement a shopping cart service (basic CRUD).  
+- Expose REST endpoints for the cart.  
+- Use in-memory mock products.  
+- Manual testing via Postman.  
 
-# e2e tests
-$ npm run test:e2e
+### 🔨 What was done
+- Created `Cart` and `CartItem` models (`model/`).  
+- Implemented cart business logic (`CarMarketService`).  
+- Created REST controller (`AppController`).  
+- Tested adding, updating, removing, and retrieving items.  
 
-# test coverage
-$ npm run test:cov
-```
+---
 
-## Deployment
+# ⚡ Delivery 2 — Scalability and Resilience
+### ✔️ Goals
+- Evolve the API applying **performance** and **resilience** techniques.  
+- Add artificial delay in `POST /cart/add` to simulate slow processing.  
+- Run **load tests** with Artillery.  
+- Implement **Redis cache** for product optimization.  
+- Add **timeout** for cart service.  
+- *(Optional)* Implement circuit breaker for repeated failures.  
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### 🔨 What was done
+1. **Load simulation**  
+   - Added `setTimeout` in `/cart/add`.  
+   - Ran load tests with **Artillery** (latency, RPS, error tracking).  
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. **Redis Cache**  
+   - Configured `CacheModule` in `app.module.ts`.  
+   - Created `CacheService` with `set`, `get`, `del`.  
+   - Applied **Cache-Aside pattern** in `GET /products/:id`.  
+   - Redis running locally via Docker.  
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+3. **Timeout & Resilience**  
+   - Timeout applied in `POST /cart/add`.  
+   - *(Optional)* Circuit breaker for failing requests.  
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+4. **New Load Tests**  
+   - Compared performance **before and after cache**.  
+   - Observed significant latency reduction.  
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📊 Results
+- **Before cache:**  
+  - Higher latency (every request goes directly to "database").  
+  - CPU and I/O usage increased under load.  
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- **After cache (Redis):**  
+  - Much lower latency (responses served from cache).  
+  - Better requests-per-second (RPS).  
+  - More stable under high load.  
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🏫 Course Info
+- **Course:** Software Architecture  
+- **Institution:** UniSatc  
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
