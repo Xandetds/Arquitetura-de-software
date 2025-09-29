@@ -1,96 +1,102 @@
 <div align="center">
-  <h1>🛒 API de E-commerce — Arquitetura de Software</h1>
-  <p>Projeto prático da disciplina de Arquitetura de Software — UniSatc</p>
+  <h1>🛒 E-commerce API — Software Architecture</h1>
+  <p>Practical project for the <b>Software Architecture</b> course — UniSatc</p>
 </div>
 
 ---
 
-## 📚 Sobre o Projeto
-Este repositório contém a evolução de uma **API REST em NestJS** para um sistema de e-commerce, desenvolvida em duas etapas de entrega.  
-O objetivo é aplicar **conceitos de arquitetura**, **escalabilidade** e **resiliência**, com testes práticos de desempenho.
+## 📚 About the Project
+This repository contains the development and evolution of a **REST API built with NestJS** for an e-commerce system, delivered in two iterations.  
+The main goal was to apply **architecture concepts**, **scalability**, and **resilience**, with hands-on **performance testing**.
 
 ---
 
-## 🚀 Tecnologias Utilizadas
-- [Node.js](https://nodejs.org/)  
-- [NestJS](https://nestjs.com/)  
-- [TypeScript](https://www.typescriptlang.org/)  
-- [Postman](https://www.postman.com/) (testes manuais)  
-- [Artillery](https://artillery.io/) (testes de carga)  
-- [Redis](https://redis.io/) (cache para escalabilidade)  
+## 🚀 Tech Stack
+<div align="center">
+
+<a href="https://skillicons.dev">
+  <img src="https://skillicons.dev/icons?i=nodejs,nest,ts,redis,postgres,github" alt="Skills" />
+</a>
+
+<br/><br/>
+
+<img src="https://img.shields.io/badge/Artillery-000000?style=for-the-badge&logo=artillery&logoColor=white" alt="Artillery">
+<img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman">
+
+</div>
 
 ---
 
-## 📌 Estrutura da API
-### Endpoints principais
-- **GET `/products`** → lista todos os produtos (com suporte a paginação).  
-- **GET `/products/:id`** → retorna detalhes de um produto específico.  
-- **POST `/cart/add`** → adiciona item ao carrinho (com atraso artificial para simular processamento lento).  
-- **GET `/cart/:id`** → retorna o carrinho com seus itens.  
-- **PUT `/cart/:id/items/:productId`** → atualiza quantidade de um item no carrinho.  
-- **DELETE `/cart/:id/items/:productId`** → remove um item do carrinho.  
+## 📌 API Structure
+### Main Endpoints
+- **GET `/products`** → List all products (with pagination support).  
+- **GET `/products/:id`** → Get details of a specific product.  
+- **POST `/cart/add`** → Add an item to the cart (with artificial delay to simulate heavy processing).  
+- **GET `/cart/:id`** → Retrieve a cart and its items.  
+- **PUT `/cart/:id/items/:productId`** → Update quantity of a cart item.  
+- **DELETE `/cart/:id/items/:productId`** → Remove an item from the cart.  
 
 ---
 
-# 📦 Entrega 1 — Implementação inicial
-### ✔️ Objetivos
-- Implementar serviço de carrinho de compras (CRUD básico).  
-- Expor endpoints REST para carrinho.  
-- Usar produtos mockados em memória.  
-- Testar manualmente via Postman.  
+# 📦 Delivery 1 — Initial Implementation
+### ✔️ Goals
+- Implement a shopping cart service (basic CRUD).  
+- Expose REST endpoints for the cart.  
+- Use in-memory mock products.  
+- Manual testing via Postman.  
 
-### 🔨 O que foi feito
-- Criação do `Cart` e `CartItem` como modelos (`model/`).  
-- Implementação da lógica de carrinho (`CarMarketService`).  
-- Criação do controlador REST (`AppController`).  
-- Testes básicos de adicionar, atualizar, remover e buscar itens no carrinho.  
-- Endpoint de produtos também exposto via GraphQL para aprendizado.  
-
----
-
-# ⚡ Entrega 2 — Escalabilidade e Resiliência
-### ✔️ Objetivos
-- Evoluir a API, aplicando técnicas de **desempenho** e **resiliência**.  
-- Introduzir simulação de processamento lento no `POST /cart/add`.  
-- Executar **testes de carga** com Artillery.  
-- Implementar **cache com Redis** para otimizar produtos.  
-- Adicionar **timeout** no serviço de carrinho.  
-- (Bônus) Circuit breaker para requisições repetidamente falhas.  
-
-### 🔨 O que foi feito
-1. **Simulação de carga**  
-   - Adicionado `setTimeout` no endpoint `/cart/add` para simular operação lenta.  
-   - Testes executados com **Artillery**, medindo latência, RPS e erros.  
-
-2. **Cache com Redis**  
-   - Configuração do `CacheModule` no `app.module.ts`.  
-   - Criação de `CacheService` com métodos `set`, `get`, `del`.  
-   - Endpoint `GET /products/:id` otimizado com padrão **Cache-Aside**.  
-   - Redis local (Docker) ou Redis Cloud (free tier) configurado.  
-
-3. **Timeout e Resiliência**  
-   - Adicionado timeout no `POST /cart/add`.  
-   - (Opcional) Circuit breaker implementado para interromper chamadas em falha.  
-
-4. **Novos testes de carga**  
-   - Comparação do desempenho **antes e depois do cache**.  
-   - Observação de melhoria significativa no tempo de resposta.  
+### 🔨 What was done
+- Created `Cart` and `CartItem` models (`model/`).  
+- Implemented cart business logic (`CarMarketService`).  
+- Created REST controller (`AppController`).  
+- Tested adding, updating, removing, and retrieving items.  
 
 ---
 
-## 📊 Resultados 
-- **Antes do cache:**  
-  - Latência maior (cada requisição busca diretamente os dados).  
-  - Maior uso de CPU/I/O.  
+# ⚡ Delivery 2 — Scalability and Resilience
+### ✔️ Goals
+- Evolve the API applying **performance** and **resilience** techniques.  
+- Add artificial delay in `POST /cart/add` to simulate slow processing.  
+- Run **load tests** with Artillery.  
+- Implement **Redis cache** for product optimization.  
+- Add **timeout** for cart service.  
+- *(Optional)* Implement circuit breaker for repeated failures.  
 
-- **Depois do cache:**  
-  - Latência reduzida (produtos já em memória via Redis).  
-  - Melhor taxa de requisições por segundo (RPS).  
-  - Menos gargalos em operações repetitivas.  
+### 🔨 What was done
+1. **Load simulation**  
+   - Added `setTimeout` in `/cart/add`.  
+   - Ran load tests with **Artillery** (latency, RPS, error tracking).  
 
+2. **Redis Cache**  
+   - Configured `CacheModule` in `app.module.ts`.  
+   - Created `CacheService` with `set`, `get`, `del`.  
+   - Applied **Cache-Aside pattern** in `GET /products/:id`.  
+   - Redis running locally via Docker.  
+
+3. **Timeout & Resilience**  
+   - Timeout applied in `POST /cart/add`.  
+   - *(Optional)* Circuit breaker for failing requests.  
+
+4. **New Load Tests**  
+   - Compared performance **before and after cache**.  
+   - Observed significant latency reduction.  
 
 ---
 
-- **Disciplina:** Arquitetura de Software  
-- **Instituição:** UniSatc  
+## 📊 Results
+- **Before cache:**  
+  - Higher latency (every request goes directly to "database").  
+  - CPU and I/O usage increased under load.  
+
+- **After cache (Redis):**  
+  - Much lower latency (responses served from cache).  
+  - Better requests-per-second (RPS).  
+  - More stable under high load.  
+
+---
+
+## 🏫 Course Info
+- **Course:** Software Architecture  
+- **Institution:** UniSatc  
+
 
