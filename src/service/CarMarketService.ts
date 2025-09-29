@@ -3,8 +3,6 @@ import { Cart, CartItem } from '../model/Cart';
 import { products } from '../data/Products'; 
 
 
-// Serviço para gerenciar o carrinho de compras (lógica de negócio do carrinho)
-
 @Injectable()
 export class CarMarketService {
   private carts = new Map<number, Cart>();

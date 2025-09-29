@@ -1,24 +1,34 @@
-import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
-import { ProductService } from './service/ProductService'
-import { ProductResolver } from './app.resolver'
-import { GraphQLModule } from '@nestjs/graphql'
-import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo'
-import { join } from 'path'
+import { Module } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-store';
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { CarMarketService } from './service/CarMarketService';
-import { CartModule } from './cart/cart.module';
+import { ProductService } from './service/ProductService';
+import { ProductsService } from './service/ProductsService';
+import { CacheService } from './cache/cache.service';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      sortSchema: true,
+    CacheModule.register({
+      isGlobal: true,
+      store: async () =>
+        await redisStore({
+          socket: {
+            host: 'localhost', // Host do Redis
+            port: 6379, // Porta do Redis
+          },
+        }),
     }),
-    CartModule,
   ],
   controllers: [AppController],
-  providers: [CarMarketService,AppService, ProductService, ProductResolver],
+  providers: [
+    AppService,
+    CarMarketService,
+    ProductService,
+    ProductsService,
+    CacheService,
+  ],
 })
 export class AppModule {}

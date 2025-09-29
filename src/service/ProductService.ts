@@ -5,6 +5,10 @@ import { ProductGql } from 'src/model/ProductGql'
 
 @Injectable()
 export class ProductService {
+  findAll(): Product[] {
+    return products
+  }
+
   findProductById(id: string): Product {
     const product = products.find(p => p.id === id)
 
