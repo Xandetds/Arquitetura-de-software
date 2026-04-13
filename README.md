@@ -1,17 +1,17 @@
 <div align="center">
-  <h1>🛒 E-commerce API — Software Architecture</h1>
+  <h1> E-commerce API — Software Architecture</h1>
   <p>Practical project for the <b>Software Architecture</b> course — UniSatc</p>
 </div>
 
 ---
 
-## 📚 About the Project
+##  About the Project
 This repository contains the development and evolution of a **REST API built with NestJS** for an e-commerce system, delivered in two iterations.  
 The main goal was to apply **architecture concepts**, **scalability**, and **resilience**, with hands-on **performance testing**.
 
 ---
 
-## 🚀 Tech Stack
+##  Tech Stack
 <div align="center">
 
 <a href="https://skillicons.dev">
@@ -27,7 +27,7 @@ The main goal was to apply **architecture concepts**, **scalability**, and **res
 
 ---
 
-## 📌 API Structure
+##  API Structure
 ### Main Endpoints
 - **GET `/products`** → List all products (with pagination support).  
 - **GET `/products/:id`** → Get details of a specific product.  
@@ -38,14 +38,14 @@ The main goal was to apply **architecture concepts**, **scalability**, and **res
 
 ---
 
-# 📦 Delivery 1 — Initial Implementation
-### ✔️ Goals
+#  Delivery 1 — Initial Implementation
+###  Goals
 - Implement a shopping cart service (basic CRUD).  
 - Expose REST endpoints for the cart.  
 - Use in-memory mock products.  
 - Manual testing via Postman.  
 
-### 🔨 What was done
+###  What was done
 - Created `Cart` and `CartItem` models (`model/`).  
 - Implemented cart business logic (`CarMarketService`).  
 - Created REST controller (`AppController`).  
@@ -53,8 +53,8 @@ The main goal was to apply **architecture concepts**, **scalability**, and **res
 
 ---
 
-# ⚡ Delivery 2 — Scalability and Resilience
-### ✔️ Goals
+#  Delivery 2 — Scalability and Resilience
+###  Goals
 - Evolve the API applying **performance** and **resilience** techniques.  
 - Add artificial delay in `POST /cart/add` to simulate slow processing.  
 - Run **load tests** with Artillery.  
@@ -62,7 +62,7 @@ The main goal was to apply **architecture concepts**, **scalability**, and **res
 - Add **timeout** for cart service.  
 - *(Optional)* Implement circuit breaker for repeated failures.  
 
-### 🔨 What was done
+###  What was done
 1. **Load simulation**  
    - Added `setTimeout` in `/cart/add`.  
    - Ran load tests with **Artillery** (latency, RPS, error tracking).  
@@ -83,7 +83,7 @@ The main goal was to apply **architecture concepts**, **scalability**, and **res
 
 ---
 
-## 📊 Results
+##  Results
 - **Before cache:**  
   - Higher latency (every request goes directly to "database").  
   - CPU and I/O usage increased under load.  
@@ -95,7 +95,7 @@ The main goal was to apply **architecture concepts**, **scalability**, and **res
 
 ---
 
-## 🏫 Course Info
+##  Course Info
 - **Course:** Software Architecture  
 - **Institution:** UniSatc  
 
